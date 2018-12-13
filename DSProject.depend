@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1544679297 source:c:\users\a_t75\desktop\iti\04- introuction to programming [c] – hany safwat\draft\dsproject\main.cpp
+	<iostream>
+	<string.h>
+	<string>
+
