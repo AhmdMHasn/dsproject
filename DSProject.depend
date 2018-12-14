@@ -32,3 +32,35 @@
 	<sstream>
 	<stdlib.h>
 
+1544823105 source:c:\users\hp\desktop\ds\dsproject\department.cpp
+	<iostream>
+	<string>
+	<sstream>
+	<stdlib.h>
+	<fstream>
+
+1544822826 source:c:\users\hp\desktop\ds\dsproject\main.cpp
+	<iostream>
+	<string.h>
+	<sstream>
+	<stdlib.h>
+	"student.cpp"
+	"department.cpp"
+
+1544823105 c:\users\hp\desktop\ds\dsproject\student.cpp
+	<iostream>
+	<string>
+	<fstream>
+
+1544823105 c:\users\hp\desktop\ds\dsproject\department.cpp
+	<iostream>
+	<string>
+	<sstream>
+	<stdlib.h>
+	<fstream>
+
+1544823105 source:c:\users\hp\desktop\ds\dsproject\student.cpp
+	<iostream>
+	<string>
+	<fstream>
+

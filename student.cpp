@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+#include<fstream>
 using namespace std;
 
 struct studentStruct
@@ -16,6 +16,8 @@ struct studentStruct
 
 class student
 {
+     ofstream outFile;
+ ifstream inFile;
     studentStruct * head;
     studentStruct * tail;
 public:
@@ -30,7 +32,7 @@ public:
     }
 
     // Append function to add new student
-    append(string _id, string _fName, string _lName, int _age, int _depID)
+    void append(string _id, string _fName, string _lName, int _age, int _depID)
     {
         studentStruct * temp;
         temp = new studentStruct;
@@ -218,4 +220,45 @@ public:
         cout <<"  " << counter << "\t| " << temp -> id << "\t| "<< temp -> fName
              << "\t\t| "<< temp -> lName << "\t| " << temp -> age << "\t| " << temp -> depID << endl;
     }
+     void save (){
+
+        outFile.open("student.txt");
+         studentStruct * temp = head;
+
+
+        while (temp != NULL)
+        {
+             outFile << temp ->id << " "
+                     << temp ->fName <<" "
+                     << temp ->lName << " "
+                     << temp ->age << " "
+                     << temp ->depID<<endl ;
+
+            temp = temp -> next;
+
+        }
+        outFile.close();
+
+
+    }
+     void read ()
+      {
+       string _id,_fnam,_lname;
+       int _age ,_dept_id;
+
+        inFile.open("student.txt");
+
+
+
+         while(inFile>>_id>>_fnam>>_lname>>_age>>_dept_id)
+       {
+
+
+        append(_id,_fnam,_lname,_age,_dept_id);
+
+
+        }
+
+        inFile.close();
+     }
 };

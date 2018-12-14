@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>
 #include <stdlib.h>
-
+#include<fstream>
 using namespace std;
 
 struct departmentStruct
@@ -15,6 +15,8 @@ struct departmentStruct
 
 class department
 {
+     ofstream outFile;
+ ifstream inFile;
     departmentStruct * head;
     departmentStruct * tail;
 public:
@@ -29,7 +31,7 @@ public:
     }
 
     // Append function to add new student
-    append(int _deptID, string _deptName)
+    void append(int _deptID, string _deptName)
     {
         departmentStruct * temp;
         temp = new departmentStruct;
@@ -168,5 +170,42 @@ public:
     void printRow(departmentStruct * temp,int counter)
     {
         cout <<"  " << counter << "\t| " << temp -> deptID << "\t| "<< temp -> deptName << endl;
+    }
+     void save()
+    {
+
+        outFile.open("dept.txt");
+         departmentStruct * temp = head;
+
+        while (temp != NULL)
+        {
+             outFile << temp -> deptID << " "<< temp -> deptName <<" "<<endl;
+            temp = temp -> next;
+        }
+        outFile.close();
+
+
+    }
+
+    void read()
+    {
+
+        inFile.open("dept.txt");
+
+        int d_id;
+        string d_name;
+
+
+     while (inFile>>d_id>>d_name)
+       {
+
+
+        append(d_id ,d_name);
+
+        }
+
+        inFile.close();
+
+
     }
 };
