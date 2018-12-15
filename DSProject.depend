@@ -64,3 +64,39 @@
 	<string>
 	<fstream>
 
+1544833353 source:d:\iti\data structure\project\new folder\dsproject-master\main.cpp
+	<iostream>
+	<string.h>
+	<sstream>
+	<stdlib.h>
+	"student.cpp"
+	"department.cpp"
+
+1544833418 d:\iti\data structure\project\new folder\dsproject-master\student.cpp
+	<iostream>
+	<string>
+	<sstream>
+	<stdlib.h>
+	<fstream>
+
+1544832795 d:\iti\data structure\project\new folder\dsproject-master\department.cpp
+	<iostream>
+	<string>
+	<sstream>
+	<stdlib.h>
+	<fstream>
+
+1544832795 source:d:\iti\data structure\project\new folder\dsproject-master\department.cpp
+	<iostream>
+	<string>
+	<sstream>
+	<stdlib.h>
+	<fstream>
+
+1544833418 source:d:\iti\data structure\project\new folder\dsproject-master\student.cpp
+	<iostream>
+	<string>
+	<sstream>
+	<stdlib.h>
+	<fstream>
+

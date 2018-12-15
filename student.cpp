@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <stdlib.h>
 #include<fstream>
+
 using namespace std;
 
 struct studentStruct
@@ -16,8 +19,8 @@ struct studentStruct
 
 class student
 {
-     ofstream outFile;
- ifstream inFile;
+    ofstream outFile;
+    ifstream inFile;
     studentStruct * head;
     studentStruct * tail;
 public:
@@ -186,6 +189,49 @@ public:
         }
     }
 
+    //display concat between fName & lName
+    void displayConcat()
+    {
+        studentStruct * temp = head;
+        int counter =0;
+        cout << "  No.\t| " << "ID" << "\t| "<< "Name" <<"\t\t| "<< "Age" << "\t| " << "Department ID" << endl;
+        while (temp != NULL)
+        {
+            cout <<"  " << counter++ << "\t| " << temp -> id << "\t| "<< temp -> fName
+                 << " "<< temp -> lName << "\t| " << temp -> age << "\t| " << temp -> depID << endl;
+            temp = temp -> next;
+        }
+    }
+    //save in file
+    void save ()
+    {
+        outFile.open("student.txt");
+        studentStruct * temp = head;
+        while (temp != NULL)
+        {
+            outFile << temp ->id << " "
+                    << temp ->fName <<" "
+                    << temp ->lName << " "
+                    << temp ->age << " "
+                    << temp ->depID<<endl ;
+
+            temp = temp -> next;
+        }
+        outFile.close();
+    }
+    //read from file
+    void read ()
+    {
+        string _id,_fnam,_lname;
+        int _age,_dept_id;
+        inFile.open("student.txt");
+        while(inFile>>_id>>_fnam>>_lname>>_age>>_dept_id)
+        {
+            append(_id,_fnam,_lname,_age,_dept_id);
+        }
+        inFile.close();
+    }
+
     void displayWhere(string columnName,string operation,string value)
     {
         studentStruct * temp = head;
@@ -194,71 +240,898 @@ public:
         while (temp != NULL)
         {
             if(columnName == "id")
+            {
                 if(operation == "=")
+                {
                     if(temp ->id == value)
                         printRow(temp,counter++);
-            if(operation == "!=")
-                if(temp ->id != value)
-                    printRow(temp,counter++);
-            if(operation == ">=")
-                if(temp ->id >= value)
-                    printRow(temp,counter++);
-            if(operation == "<=")
-                if(temp ->id <= value)
-                    printRow(temp,counter++);
-            if(operation == "<")
-                if(temp ->id < value)
-                    printRow(temp,counter++);
-            if(operation == ">")
-                if(temp ->id > value)
-                    printRow(temp,counter++);
+                }
+                else if(operation == "!=")
+                {
+                    if(temp ->id != value)
+                        printRow(temp,counter++);
+                }
+                else if(operation == ">=")
+                {
+                    if(temp ->id >= value)
+                        printRow(temp,counter++);
+                }
+                else if(operation == "<=")
+                {
+                    if(temp ->id <= value)
+                        printRow(temp,counter++);
+                }
+                else if(operation == "<")
+                {
+                    if(temp ->id < value)
+                        printRow(temp,counter++);
+                }
+                else if(operation == ">")
+                {
+                    if(temp ->id > value)
+                        printRow(temp,counter++);
+                }
+                else
+                    cout<<"invalid command, operator doesn't exist"<<endl;
+                temp = temp -> next;
+            }
+            else if(columnName == "fname")
+            {
+                if(operation == "=")
+                {
+                    if(temp -> fName == value)
+                        printRow(temp,counter++);
+                }
+                else if(operation == "!=")
+                {
+                    if(temp -> fName != value)
+                        printRow(temp,counter++);
+                }
+                else
+                    cout<<"invalid command"<<endl;
+                temp = temp -> next;
+            }
+            else if(columnName == "lname")
+            {
+                if(operation == "=")
+                {
+                    if(temp -> lName == value)
+                        printRow(temp,counter++);
+                }
+                else if(operation == "!=")
+                {
+                    if(temp -> lName != value)
+                        printRow(temp,counter++);
+                }
+                else
+                    cout<<"invalid command"<<endl;
+                temp = temp -> next;
+            }
+            else if(columnName == "age")
+            {
+                if(operation == "=")
+                {
+                    if(temp ->age == atoi(value.c_str()))
+                        printRow(temp,counter++);
+                }
+                else if(operation == "!=")
+                {
+                    if(temp ->age != atoi(value.c_str()))
+                        printRow(temp,counter++);
+                }
+                else if(operation == ">=")
+                {
+                    if(temp ->age >= atoi(value.c_str()))
+                        printRow(temp,counter++);
+                }
+                else if(operation == "<=")
+                {
+                    if(temp ->age <= atoi(value.c_str()))
+                        printRow(temp,counter++);
+                }
+                else if(operation == "<")
+                {
+                    if(temp ->age < atoi(value.c_str()))
+                        printRow(temp,counter++);
+                }
+                else if(operation == ">")
+                {
+                    if(temp ->age > atoi(value.c_str()))
+                        printRow(temp,counter++);
+                }
+                else
+                    cout<<"invalid command, operator doesn't exist"<<endl;
+
+                temp = temp -> next;
+            }
+            else if(columnName == "deptId")
+            {
+                if(operation == "=")
+                {
+                    if(temp -> depID == atoi(value.c_str()))
+                        printRow(temp,counter++);
+                }
+                else if(operation == "!=")
+                {
+                    if(temp -> depID != atoi(value.c_str()))
+                        printRow(temp,counter++);
+                }
+                else if(operation == ">=")
+                {
+                    if(temp -> depID >= atoi(value.c_str()))
+                        printRow(temp,counter++);
+                }
+                else if(operation == "<=")
+                {
+                    if(temp -> depID <= atoi(value.c_str()))
+                        printRow(temp,counter++);
+                }
+                else if(operation == "<")
+                {
+                    if(temp -> depID < atoi(value.c_str()))
+                        printRow(temp,counter++);
+                }
+                else if(operation == ">")
+                {
+                    if(temp -> depID > atoi(value.c_str()))
+                        printRow(temp,counter++);
+                }
+                else
+                    cout<<"invalid command, operator doesn't exist"<<endl;
+                temp = temp -> next;
+            }
+        }
+    }
+
+
+    void deleteWhere(string columnName,string operation,string value)
+    {
+        studentStruct * temp = head;
+        while (temp != NULL)
+        {
+            if(columnName == "id")
+            {
+                if(operation == "=")
+                {
+                    if(temp -> id == value )
+                        //temp = searchByID(value);
+                    {
+                        if ( temp == NULL )
+                            return;
+                        if ( head == tail )
+                        {
+                            delete temp;
+                            head = tail = NULL;
+                        }
+                        else if ( temp == head )
+                        {
+                            head = temp -> next;
+                            head -> prev = NULL;
+                            delete temp;
+                        }
+                        else if ( temp == tail)
+                        {
+                            tail = temp -> prev;
+                            tail -> next = NULL;
+                            delete temp;
+                        }
+                        else
+                        {
+                            temp -> next -> prev = temp -> prev;
+                            temp -> prev -> next = temp -> next;
+                            delete temp;
+                        }
+                    }
+                }
+                else if(operation == ">")
+                {
+                    if(temp -> id > value)
+                        //temp = searchByID(value);
+                    {
+                        if ( temp == NULL )
+                            return;
+                        if ( head == tail )
+                        {
+                            delete temp;
+                            head = tail = NULL;
+                        }
+                        else if ( temp == head )
+                        {
+                            head = temp -> next;
+                            head -> prev = NULL;
+                            delete temp;
+                        }
+                        else if ( temp == tail)
+                        {
+                            tail = temp -> prev;
+                            tail -> next = NULL;
+                            delete temp;
+                        }
+                        else
+                        {
+                            temp -> next -> prev = temp -> prev;
+                            temp -> prev -> next = temp -> next;
+                            delete temp;
+                        }
+                    }
+                }
+                else if(operation == ">=")
+                {
+                    if(temp -> id >= value)
+                        //temp = searchByID(value);
+                    {
+                        if ( temp == NULL )
+                            return;
+                        if ( head == tail )
+                        {
+                            delete temp;
+                            head = tail = NULL;
+                        }
+                        else if ( temp == head )
+                        {
+                            head = temp -> next;
+                            head -> prev = NULL;
+                            delete temp;
+                        }
+                        else if ( temp == tail)
+                        {
+                            tail = temp -> prev;
+                            tail -> next = NULL;
+                            delete temp;
+                        }
+                        else
+                        {
+                            temp -> next -> prev = temp -> prev;
+                            temp -> prev -> next = temp -> next;
+                            delete temp;
+                        }
+                    }
+                }
+                else if(operation == "<")
+                {
+                    if(temp -> id < value)
+                        //temp = searchByID(value);
+                    {
+                        if ( temp == NULL )
+                            return;
+                        if ( head == tail )
+                        {
+                            delete temp;
+                            head = tail = NULL;
+                        }
+                        else if ( temp == head )
+                        {
+                            head = temp -> next;
+                            head -> prev = NULL;
+                            delete temp;
+                        }
+                        else if ( temp == tail)
+                        {
+                            tail = temp -> prev;
+                            tail -> next = NULL;
+                            delete temp;
+                        }
+                        else
+                        {
+                            temp -> next -> prev = temp -> prev;
+                            temp -> prev -> next = temp -> next;
+                            delete temp;
+                        }
+                    }
+                }
+                else if(operation == "<=")
+                {
+                    if(temp -> id <= value)
+                        //temp = searchByID(value);
+                    {
+                        if ( temp == NULL )
+                            return;
+                        if ( head == tail )
+                        {
+                            delete temp;
+                            head = tail = NULL;
+                        }
+                        else if ( temp == head )
+                        {
+                            head = temp -> next;
+                            head -> prev = NULL;
+                            delete temp;
+                        }
+                        else if ( temp == tail)
+                        {
+                            tail = temp -> prev;
+                            tail -> next = NULL;
+                            delete temp;
+                        }
+                        else
+                        {
+                            temp -> next -> prev = temp -> prev;
+                            temp -> prev -> next = temp -> next;
+                            delete temp;
+                        }
+                    }
+                }
+                else if(operation == "!=")
+                {
+                    if(temp -> id != value)
+                        //temp = searchByID(value);
+                    {
+                        if ( temp == NULL )
+                            return;
+                        if ( head == tail )
+                        {
+                            delete temp;
+                            head = tail = NULL;
+                        }
+                        else if ( temp == head )
+                        {
+                            head = temp -> next;
+                            head -> prev = NULL;
+                            delete temp;
+                        }
+                        else if ( temp == tail)
+                        {
+                            tail = temp -> prev;
+                            tail -> next = NULL;
+                            delete temp;
+                        }
+                        else
+                        {
+                            temp -> next -> prev = temp -> prev;
+                            temp -> prev -> next = temp -> next;
+                            delete temp;
+                        }
+                    }
+                }
+                else
+                    cout<<"invalid command, operator doesn't exist"<<endl;
+            }
+            else if(columnName == "fname")
+            {
+                if(operation == "=")
+                {
+                    if(temp -> fName == value )
+                        //temp = searchByID(value);
+                    {
+                        if ( temp == NULL )
+                            return;
+                        if ( head == tail )
+                        {
+                            delete temp;
+                            head = tail = NULL;
+                        }
+                        else if ( temp == head )
+                        {
+                            head = temp -> next;
+                            head -> prev = NULL;
+                            delete temp;
+                        }
+                        else if ( temp == tail)
+                        {
+                            tail = temp -> prev;
+                            tail -> next = NULL;
+                            delete temp;
+                        }
+                        else
+                        {
+                            temp -> next -> prev = temp -> prev;
+                            temp -> prev -> next = temp -> next;
+                            delete temp;
+                        }
+                    }
+                }
+                else if(operation == "!=")
+                {
+                    if(temp -> fName != value)
+                        //temp = searchByID(value);
+                    {
+                        if ( temp == NULL )
+                            return;
+                        if ( head == tail )
+                        {
+                            delete temp;
+                            head = tail = NULL;
+                        }
+                        else if ( temp == head )
+                        {
+                            head = temp -> next;
+                            head -> prev = NULL;
+                            delete temp;
+                        }
+                        else if ( temp == tail)
+                        {
+                            tail = temp -> prev;
+                            tail -> next = NULL;
+                            delete temp;
+                        }
+                        else
+                        {
+                            temp -> next -> prev = temp -> prev;
+                            temp -> prev -> next = temp -> next;
+                            delete temp;
+                        }
+                    }
+                }
+                else
+                    cout<<"invalid command, operator doesn't exist"<<endl;
+            }
+            else if(columnName == "lname")
+            {
+                if(operation == "=")
+                {
+                    if(temp -> lName == value )
+                        //temp = searchByID(value);
+                    {
+                        if ( temp == NULL )
+                            return;
+                        if ( head == tail )
+                        {
+                            delete temp;
+                            head = tail = NULL;
+                        }
+                        else if ( temp == head )
+                        {
+                            head = temp -> next;
+                            head -> prev = NULL;
+                            delete temp;
+                        }
+                        else if ( temp == tail)
+                        {
+                            tail = temp -> prev;
+                            tail -> next = NULL;
+                            delete temp;
+                        }
+                        else
+                        {
+                            temp -> next -> prev = temp -> prev;
+                            temp -> prev -> next = temp -> next;
+                            delete temp;
+                        }
+                    }
+                }
+                else if(operation == "!=")
+                {
+                    if(temp -> lName != value)
+                        //temp = searchByID(value);
+                    {
+                        if ( temp == NULL )
+                            return;
+                        if ( head == tail )
+                        {
+                            delete temp;
+                            head = tail = NULL;
+                        }
+                        else if ( temp == head )
+                        {
+                            head = temp -> next;
+                            head -> prev = NULL;
+                            delete temp;
+                        }
+                        else if ( temp == tail)
+                        {
+                            tail = temp -> prev;
+                            tail -> next = NULL;
+                            delete temp;
+                        }
+                        else
+                        {
+                            temp -> next -> prev = temp -> prev;
+                            temp -> prev -> next = temp -> next;
+                            delete temp;
+                        }
+                    }
+                }
+                else
+                    cout<<"invalid command, operator doesn't exist"<<endl;
+            }
+            else if(columnName == "age")
+            {
+                {
+                    if(operation == "=")
+                    {
+                        if(temp -> age == atoi(value.c_str()))
+                            //temp = searchByID(value);
+                        {
+                            if ( temp == NULL )
+                                return;
+                            if ( head == tail )
+                            {
+                                delete temp;
+                                head = tail = NULL;
+                            }
+                            else if ( temp == head )
+                            {
+                                head = temp -> next;
+                                head -> prev = NULL;
+                                delete temp;
+                            }
+                            else if ( temp == tail)
+                            {
+                                tail = temp -> prev;
+                                tail -> next = NULL;
+                                delete temp;
+                            }
+                            else
+                            {
+                                temp -> next -> prev = temp -> prev;
+                                temp -> prev -> next = temp -> next;
+                                delete temp;
+                            }
+                        }
+                    }
+                    else if(operation == ">")
+                    {
+                        if(temp -> age > atoi(value.c_str()))
+                            //temp = searchByID(value);
+                        {
+                            if ( temp == NULL )
+                                return;
+                            if ( head == tail )
+                            {
+                                delete temp;
+                                head = tail = NULL;
+                            }
+                            else if ( temp == head )
+                            {
+                                head = temp -> next;
+                                head -> prev = NULL;
+                                delete temp;
+                            }
+                            else if ( temp == tail)
+                            {
+                                tail = temp -> prev;
+                                tail -> next = NULL;
+                                delete temp;
+                            }
+                            else
+                            {
+                                temp -> next -> prev = temp -> prev;
+                                temp -> prev -> next = temp -> next;
+                                delete temp;
+                            }
+                        }
+                    }
+                    else if(operation == ">=")
+                    {
+                        if(temp -> age >= atoi(value.c_str()))
+                            //temp = searchByID(value);
+                        {
+                            if ( temp == NULL )
+                                return;
+                            if ( head == tail )
+                            {
+                                delete temp;
+                                head = tail = NULL;
+                            }
+                            else if ( temp == head )
+                            {
+                                head = temp -> next;
+                                head -> prev = NULL;
+                                delete temp;
+                            }
+                            else if ( temp == tail)
+                            {
+                                tail = temp -> prev;
+                                tail -> next = NULL;
+                                delete temp;
+                            }
+                            else
+                            {
+                                temp -> next -> prev = temp -> prev;
+                                temp -> prev -> next = temp -> next;
+                                delete temp;
+                            }
+                        }
+                    }
+                    else if(operation == "<")
+                    {
+                        if(temp -> age < atoi(value.c_str()))
+                            //temp = searchByID(value);
+                        {
+                            if ( temp == NULL )
+                                return;
+                            if ( head == tail )
+                            {
+                                delete temp;
+                                head = tail = NULL;
+                            }
+                            else if ( temp == head )
+                            {
+                                head = temp -> next;
+                                head -> prev = NULL;
+                                delete temp;
+                            }
+                            else if ( temp == tail)
+                            {
+                                tail = temp -> prev;
+                                tail -> next = NULL;
+                                delete temp;
+                            }
+                            else
+                            {
+                                temp -> next -> prev = temp -> prev;
+                                temp -> prev -> next = temp -> next;
+                                delete temp;
+                            }
+                        }
+                    }
+                    else if(operation == "<=")
+                    {
+                        if(temp -> age <= atoi(value.c_str()))
+                            //temp = searchByID(value);
+                        {
+                            if ( temp == NULL )
+                                return;
+                            if ( head == tail )
+                            {
+                                delete temp;
+                                head = tail = NULL;
+                            }
+                            else if ( temp == head )
+                            {
+                                head = temp -> next;
+                                head -> prev = NULL;
+                                delete temp;
+                            }
+                            else if ( temp == tail)
+                            {
+                                tail = temp -> prev;
+                                tail -> next = NULL;
+                                delete temp;
+                            }
+                            else
+                            {
+                                temp -> next -> prev = temp -> prev;
+                                temp -> prev -> next = temp -> next;
+                                delete temp;
+                            }
+                        }
+                    }
+                    else if(operation == "!=")
+                    {
+                        if(temp -> age != atoi(value.c_str()))
+                            //temp = searchByID(value);
+                        {
+                            if ( temp == NULL )
+                                return;
+                            if ( head == tail )
+                            {
+                                delete temp;
+                                head = tail = NULL;
+                            }
+                            else if ( temp == head )
+                            {
+                                head = temp -> next;
+                                head -> prev = NULL;
+                                delete temp;
+                            }
+                            else if ( temp == tail)
+                            {
+                                tail = temp -> prev;
+                                tail -> next = NULL;
+                                delete temp;
+                            }
+                            else
+                            {
+                                temp -> next -> prev = temp -> prev;
+                                temp -> prev -> next = temp -> next;
+                                delete temp;
+                            }
+                        }
+                    }
+                    else
+                        cout<<"invalid command, operator doesn't exist"<<endl;
+                }
+            }
+            else if(columnName == "deptId")
+            {
+                {
+                    {
+                        if(operation == "=")
+                        {
+                            if(temp -> depID == atoi(value.c_str()))
+                                //temp = searchByID(value);
+                            {
+                                if ( temp == NULL )
+                                    return;
+                                if ( head == tail )
+                                {
+                                    delete temp;
+                                    head = tail = NULL;
+                                }
+                                else if ( temp == head )
+                                {
+                                    head = temp -> next;
+                                    head -> prev = NULL;
+                                    delete temp;
+                                }
+                                else if ( temp == tail)
+                                {
+                                    tail = temp -> prev;
+                                    tail -> next = NULL;
+                                    delete temp;
+                                }
+                                else
+                                {
+                                    temp -> next -> prev = temp -> prev;
+                                    temp -> prev -> next = temp -> next;
+                                    delete temp;
+                                }
+                            }
+                        }
+                        else if(operation == ">")
+                        {
+                            if(temp -> depID > atoi(value.c_str()))
+                                //temp = searchByID(value);
+                            {
+                                if ( temp == NULL )
+                                    return;
+                                if ( head == tail )
+                                {
+                                    delete temp;
+                                    head = tail = NULL;
+                                }
+                                else if ( temp == head )
+                                {
+                                    head = temp -> next;
+                                    head -> prev = NULL;
+                                    delete temp;
+                                }
+                                else if ( temp == tail)
+                                {
+                                    tail = temp -> prev;
+                                    tail -> next = NULL;
+                                    delete temp;
+                                }
+                                else
+                                {
+                                    temp -> next -> prev = temp -> prev;
+                                    temp -> prev -> next = temp -> next;
+                                    delete temp;
+                                }
+                            }
+                        }
+                        else if(operation == ">=")
+                        {
+                            if(temp -> depID >= atoi(value.c_str()))
+                                //temp = searchByID(value);
+                            {
+                                if ( temp == NULL )
+                                    return;
+                                if ( head == tail )
+                                {
+                                    delete temp;
+                                    head = tail = NULL;
+                                }
+                                else if ( temp == head )
+                                {
+                                    head = temp -> next;
+                                    head -> prev = NULL;
+                                    delete temp;
+                                }
+                                else if ( temp == tail)
+                                {
+                                    tail = temp -> prev;
+                                    tail -> next = NULL;
+                                    delete temp;
+                                }
+                                else
+                                {
+                                    temp -> next -> prev = temp -> prev;
+                                    temp -> prev -> next = temp -> next;
+                                    delete temp;
+                                }
+                            }
+                        }
+                        else if(operation == "<")
+                        {
+                            if(temp -> depID < atoi(value.c_str()))
+                                //temp = searchByID(value);
+                            {
+                                if ( temp == NULL )
+                                    return;
+                                if ( head == tail )
+                                {
+                                    delete temp;
+                                    head = tail = NULL;
+                                }
+                                else if ( temp == head )
+                                {
+                                    head = temp -> next;
+                                    head -> prev = NULL;
+                                    delete temp;
+                                }
+                                else if ( temp == tail)
+                                {
+                                    tail = temp -> prev;
+                                    tail -> next = NULL;
+                                    delete temp;
+                                }
+                                else
+                                {
+                                    temp -> next -> prev = temp -> prev;
+                                    temp -> prev -> next = temp -> next;
+                                    delete temp;
+                                }
+                            }
+                        }
+                        else if(operation == "<=")
+                        {
+                            if(temp -> depID <= atoi(value.c_str()))
+                                //temp = searchByID(value);
+                            {
+                                if ( temp == NULL )
+                                    return;
+                                if ( head == tail )
+                                {
+                                    delete temp;
+                                    head = tail = NULL;
+                                }
+                                else if ( temp == head )
+                                {
+                                    head = temp -> next;
+                                    head -> prev = NULL;
+                                    delete temp;
+                                }
+                                else if ( temp == tail)
+                                {
+                                    tail = temp -> prev;
+                                    tail -> next = NULL;
+                                    delete temp;
+                                }
+                                else
+                                {
+                                    temp -> next -> prev = temp -> prev;
+                                    temp -> prev -> next = temp -> next;
+                                    delete temp;
+                                }
+                            }
+                        }
+                        else if(operation == "!=")
+                        {
+                            if(temp -> depID != atoi(value.c_str()))
+                                //temp = searchByID(value);
+                            {
+                                if ( temp == NULL )
+                                    return;
+                                if ( head == tail )
+                                {
+                                    delete temp;
+                                    head = tail = NULL;
+                                }
+                                else if ( temp == head )
+                                {
+                                    head = temp -> next;
+                                    head -> prev = NULL;
+                                    delete temp;
+                                }
+                                else if ( temp == tail)
+                                {
+                                    tail = temp -> prev;
+                                    tail -> next = NULL;
+                                    delete temp;
+                                }
+                                else
+                                {
+                                    temp -> next -> prev = temp -> prev;
+                                    temp -> prev -> next = temp -> next;
+                                    delete temp;
+                                }
+                            }
+                        }
+                        else
+                            cout<<"invalid command, operator doesn't exist"<<endl;
+                    }
+                }
+            }
             temp = temp -> next;
         }
     }
+
     void printRow(studentStruct * temp,int counter)
     {
         cout <<"  " << counter << "\t| " << temp -> id << "\t| "<< temp -> fName
              << "\t\t| "<< temp -> lName << "\t| " << temp -> age << "\t| " << temp -> depID << endl;
     }
-     void save (){
 
-        outFile.open("student.txt");
-         studentStruct * temp = head;
-
-
-        while (temp != NULL)
-        {
-             outFile << temp ->id << " "
-                     << temp ->fName <<" "
-                     << temp ->lName << " "
-                     << temp ->age << " "
-                     << temp ->depID<<endl ;
-
-            temp = temp -> next;
-
-        }
-        outFile.close();
-
-
-    }
-     void read ()
-      {
-       string _id,_fnam,_lname;
-       int _age ,_dept_id;
-
-        inFile.open("student.txt");
-
-
-
-         while(inFile>>_id>>_fnam>>_lname>>_age>>_dept_id)
-       {
-
-
-        append(_id,_fnam,_lname,_age,_dept_id);
-
-
-        }
-
-        inFile.close();
-     }
 };
