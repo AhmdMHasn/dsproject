@@ -2,7 +2,6 @@
 #include <string.h>
 #include <sstream>
 #include <stdlib.h>
-#include "student.cpp"
 #include "department.cpp"
 
 using namespace std;
@@ -217,7 +216,39 @@ void selectFrom(string & inputData)
             cout<<"invalid command"<<endl;
     }
     else
-        cout<<"invalid command"<<endl;
+    {
+        string columnsNameArr[5];
+        columnsNameArr[0] = separate(operation,",");
+        if(columnsNameArr[0] == "id" || columnsNameArr[0] =="fname" || columnsNameArr[0] =="lname"
+                || columnsNameArr[0] =="age" || columnsNameArr[0] =="deptid")
+        {
+            for(int i=1; i<5; i++)
+                columnsNameArr[i] = separate(operation,",");
+
+            for(int i=0; i<5; i++)
+            {
+                if(!(columnsNameArr[i] == "id" || columnsNameArr[i] =="fname" || columnsNameArr[i] =="lname"
+                        || columnsNameArr[i] =="age" || columnsNameArr[i] =="deptid" || columnsNameArr[i] == ""))
+                {
+                    cout<<"invalid command"<<endl;
+                    return;
+                }
+
+            }
+            operation =separate(inputData," ");
+            if(operation == "from")
+            {
+                operation =separate(inputData," ");
+                if(operation == "student")
+                {
+                    s1.displayColumns(columnsNameArr);
+                }
+            }
+        }
+        else
+            cout<<"invalid command"<<endl;
+    }
+
 }
 void deleteFrom(string & inputData)
 {
@@ -267,13 +298,14 @@ void deleteFrom(string & inputData)
                 if(columnName == "id" ||columnName == "name")
                 {
                     operation =separate(inputData," ");
-                    if(operation == "=" ||operation == "=<" ||operation == "=>" ||operation == "<" ||
+                    if(operation == "=" ||operation == "<=" ||operation == ">=" ||operation == "<" ||
                             operation == ">" ||operation == "!=")
                     {
                         string value = separate(inputData," ");
                         if(value != "")
                         {
-                            d1.deleteByID(atoi(value.c_str()), operation);
+                           // d1.deleteByID(atoi(value.c_str()), operation);
+                           d1.deleteWhere(s1,columnName,operation,value);
                         }
                         else
                             cout<<"invalid command"<<endl;
@@ -285,7 +317,7 @@ void deleteFrom(string & inputData)
                     cout<<"invalid command"<<endl;
             }
             else
-                d1.deleteALL();
+                d1.deleteALL(s1);
         }
         else
             cout<<"invalid command"<<endl;

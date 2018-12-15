@@ -89,12 +89,27 @@ public:
         }
         return NULL;
     }
+    //search by student id and return boolen
     int searchStudentByID( string _id)
     {
         studentStruct * temp = head;
         while (temp != NULL)
         {
             if( _id == temp -> id )
+            {
+                return 1;
+            }
+            temp = temp -> next;
+        }
+        return 0;
+    }
+
+    int searchStudentByDeptID( int dept_id)
+    {
+        studentStruct * temp = head;
+        while (temp != NULL)
+        {
+            if( dept_id == temp -> depID )
             {
                 return 1;
             }
@@ -1128,10 +1143,89 @@ public:
         }
     }
 
+    //delete by department id
+    void deleteByDepartmentID(int dept_id)
+    {
+        studentStruct *temp = head;
+        while(temp != NULL)
+        {
+            if(temp -> depID == dept_id)
+            {
+                if ( temp == NULL )
+                    return;
+                if ( head == tail )
+                {
+                    delete temp;
+                    head = tail = NULL;
+                }
+                else if ( temp == head )
+                {
+                    head = temp -> next;
+                    head -> prev = NULL;
+                    delete temp;
+                }
+                else if ( temp == tail)
+                {
+                    tail = temp -> prev;
+                    tail -> next = NULL;
+                    delete temp;
+                }
+                else
+                {
+                    temp -> next -> prev = temp -> prev;
+                    temp -> prev -> next = temp -> next;
+                    delete temp;
+                }
+            }
+            temp = temp -> next;
+        }
+    }
+
+    //print row from table
     void printRow(studentStruct * temp,int counter)
     {
         cout <<"  " << counter << "\t| " << temp -> id << "\t| "<< temp -> fName
              << "\t\t| "<< temp -> lName << "\t| " << temp -> age << "\t| " << temp -> depID << endl;
     }
 
+    //display custom column from table
+    void displayColumns(string * columnsNames)
+    {
+        cout << "  No.";
+        for(int i=0; i<5; i++)
+        {
+            if(columnsNames[i] == "id")
+                cout << "\t| "<< "ID";
+            if(columnsNames[i] == "fname")
+                cout << "\t| "<< "First Name";
+            if(columnsNames[i] == "lname")
+                cout << "\t| "<< "Last Name";
+            if(columnsNames[i] == "age")
+                cout <<"\t| "<< "Age";
+            if(columnsNames[i] == "deptid")
+                cout << "\t| " << "Department ID";
+        }
+        studentStruct * temp = head;
+        int counter =0;
+        cout << endl;
+        while (temp != NULL)
+        {
+            cout <<"  " << counter++ ;
+            for(int i=0; i<5; i++)
+            {
+                if(columnsNames[i] == "id")
+                    cout << "\t| "<< temp -> id;
+                if(columnsNames[i] == "fname")
+                    cout <<"\t| "<< temp -> fName;
+                if(columnsNames[i] == "lname")
+                    cout << "\t| "<< temp -> lName ;
+                if(columnsNames[i] == "age")
+                    cout << "\t| " << temp -> age;
+                if(columnsNames[i] == "deptid")
+                    cout << "\t| " << temp -> depID;
+            }
+            cout<< endl;
+            temp = temp -> next;
+        }
+    }
 };

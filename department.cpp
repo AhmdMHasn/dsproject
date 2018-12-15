@@ -3,6 +3,8 @@
 #include <sstream>
 #include <stdlib.h>
 #include<fstream>
+#include "student.cpp"
+
 using namespace std;
 
 struct departmentStruct
@@ -116,14 +118,37 @@ public:
         }
 
     }
-    void deleteALL()
+    void deleteALL(student & s1)
     {
         departmentStruct * temp = head;
         while ( temp != NULL)
         {
-            head = head -> next;
-            delete temp;
-            temp = head;
+            if(!(s1.searchStudentByDeptID(temp -> deptID)))
+            {
+                head = head -> next;
+                delete temp;
+                temp = head;
+            }
+            else
+            {
+                cout << " All students in this department will be removed" << endl <<
+                     " Are you sure to delete this department ?[y/n] :";
+                char input;
+                cin>>input;
+                if(input == 'y')
+                {
+                    s1.deleteByDepartmentID(temp -> deptID);
+                    head = head -> next;
+                    delete temp;
+                    temp = head;
+                }
+                else if(input == 'n')
+                {
+
+                }
+
+            }
+
         }
     }
     // Display all students
@@ -224,7 +249,7 @@ public:
         }
     }
 
-    void deleteWhere(string columnName,string operation,string value)
+    void deleteWhere(student & s1,string columnName,string operation,string value)
     {
         departmentStruct * temp = head;
         while (temp != NULL)
@@ -234,8 +259,8 @@ public:
                 if(operation == "=")
                 {
                     if(temp -> deptID == atoi(value.c_str()))
-                        //temp = searchByID(value);
                     {
+                        deleteWhereDeptID(s1,temp -> deptID);
                         if ( temp == NULL )
                             return;
                         if ( head == tail )
@@ -432,7 +457,6 @@ public:
                 if(operation == "=")
                 {
                     if(temp -> deptName == value )
-                        //temp = searchByID(value);
                     {
                         if ( temp == NULL )
                             return;
@@ -464,7 +488,6 @@ public:
                 else if(operation == "!=")
                 {
                     if(temp -> deptName != value)
-                        //temp = searchByID(value);
                     {
                         if ( temp == NULL )
                             return;
@@ -500,6 +523,42 @@ public:
         }
     }
 
+
+    void deleteWhereDeptID(student & s1, int dept_id)
+    {
+        departmentStruct * temp = head;
+        while ( temp != NULL)
+        {
+            if(temp -> deptID == dept_id)
+            {
+                if(!(s1.searchStudentByDeptID(temp -> deptID)))
+                {
+                    head = head -> next;
+                    delete temp;
+                    temp = head;
+                }
+                else
+                {
+                    cout << " All students in this department will be removed" << endl <<
+                         " Are you sure to delete this department ?[y/n] :";
+                    char input;
+                    cin>>input;
+                    if(input == 'y')
+                    {
+                        s1.deleteByDepartmentID(temp -> deptID);
+                        head = head -> next;
+                        delete temp;
+                        temp = head;
+                    }
+                    else if(input == 'n')
+                    {
+
+                    }
+                }
+            }
+            temp = temp -> next;
+        }
+    }
 
     void printRow(departmentStruct * temp,int counter)
     {
