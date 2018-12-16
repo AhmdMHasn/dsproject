@@ -167,7 +167,6 @@ public:
 
     }
 
-
     // Insert any student to the table after the current student ID
     void insertByID_after(string _id, string _fName, string _lName, int _age, int _depID, string oldID)
     {
@@ -217,6 +216,7 @@ public:
             temp = temp -> next;
         }
     }
+
     //save in file
     void save ()
     {
@@ -234,6 +234,7 @@ public:
         }
         outFile.close();
     }
+
     //read from file
     void read ()
     {
@@ -397,7 +398,6 @@ public:
             }
         }
     }
-
 
     void deleteWhere(string columnName,string operation,string value)
     {
@@ -1225,6 +1225,47 @@ public:
                     cout << "\t| " << temp -> depID;
             }
             cout<< endl;
+            temp = temp -> next;
+        }
+    }
+
+    // update values from column
+    void updateStudent(string * columnsNameArr, string * columnsValueArr, string columnName, string operation, string value)
+    {
+        studentStruct * temp = head;
+        while (temp != NULL)
+        {
+            if( columnName == "id" ) //for expanding purposes - check for id
+            {
+                if( temp -> id == value ) //for expanding purposes - - check for id value
+                {
+                    for(int i=0; i<5; i++)
+                    {
+                        if(columnsNameArr[i] == "id")
+                            temp -> id = columnsValueArr[i];
+                        if(columnsNameArr[i] == "fname")
+                            temp -> fName = columnsValueArr[i];
+                        if(columnsNameArr[i] == "lname")
+                            temp -> lName = columnsValueArr[i];
+                        if(columnsNameArr[i] == "age")
+                            temp -> age = atoi(columnsValueArr[i].c_str());
+                        if(columnsNameArr[i] == "deptid")
+                            temp -> depID = atoi(columnsValueArr[i].c_str());
+                    }
+                }
+            }
+            temp = temp -> next;
+        }
+    }
+
+    // update values from column
+    void updateStudentDeptUpdate(int value, int valueNew)
+    {
+        studentStruct * temp = head;
+        while (temp != NULL)
+        {
+            if( temp -> depID == value )
+                temp -> depID = valueNew;
             temp = temp -> next;
         }
     }

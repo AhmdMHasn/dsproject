@@ -187,6 +187,7 @@ public:
         }
         inFile.close();
     }
+
     void displayWhere(string columnName,string operation,string value)
     {
         departmentStruct * temp = head;
@@ -553,6 +554,58 @@ public:
                     else if(input == 'n')
                     {
 
+                    }
+                }
+            }
+            temp = temp -> next;
+        }
+    }
+
+    // update values from column
+    void updateDepartment( student & s1, string * columnsNameArr, string * columnsValueArr, string columnName, string operation, string value)
+    {
+        departmentStruct * temp = head;
+        while (temp != NULL)
+        {
+            if( columnName == "id" ) //for expanding purposes - check for id
+            {
+                if( temp -> deptID == atoi(value.c_str()) ) //for expanding purposes - - check for id value
+                {
+                    for(int i=0; i<2; i++)
+                    {
+                        if(columnsNameArr[i] == "id")
+                        {
+                            cout << temp -> deptID << "  " << s1.searchStudentByDeptID(temp -> deptID) << endl;
+                            if(!(s1.searchStudentByDeptID(temp -> deptID)))
+                            {
+                                temp -> deptID = atoi(columnsValueArr[i].c_str());
+                            }
+                            else
+                            {
+                                cout << " All students in this department will be updated" << endl <<
+                                     " Are you sure to update this department ?[y/n] :";
+                                char input;
+                                cin>>input;
+                                if(input == 'y')
+                                {
+                                    /*string columnsNameArrNew[1];
+                                    string columnsValueArrNew[1];
+                                    columnsNameArrNew[0] = "deptId";
+                                    columnsValueArrNew[0] = columnsValueArr[i];
+                                    s1.updateStudent( columnsNameArrNew, columnsValueArrNew, columnName, operation, value );*/
+                                    s1.updateStudentDeptUpdate( temp -> deptID , atoi(columnsValueArr[i].c_str()) );
+                                    temp -> deptID = atoi(columnsValueArr[i].c_str());
+                                }
+                                else if(input == 'n')
+                                {
+                                    return;
+                                }
+                            }
+                        }
+                        if(columnsNameArr[i] == "name")
+                        {
+                            temp -> deptName = columnsValueArr[i];
+                        }
                     }
                 }
             }

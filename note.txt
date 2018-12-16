@@ -1,0 +1,33 @@
+insert into dept 5,java
+insert into dept 6,sd
+insert into dept 7,ui
+select * from dept
+insert into student 2,ahmed,hassan,25,5
+insert into student 2,ahmed,hassan,25,5
+insert into student 4,ahmed,hassan,25,5
+insert into student 6,ahmed,ashraf,24,5
+insert into student 8,esraa,soliman,24,5
+select * from student where fname = esraa
+select * from student where fname != esraa
+select * from student where lname = hassan
+select * from student where lname != hassan
+select * from student where age >= 25
+select * from student where deptId = 4
+select * from student where deptId = 5
+select * from dept where id > 5
+select * from dept where name != java
+
+delete from student
+select * from student
+insert into student 2,ahmed,hassan,25,5
+insert into student 2,ahmed,hassan,25,5
+insert into student 4,ahmed,hassan,25,5
+insert into student 6,ahmed,ashraf,24,5
+insert into student 8,esraa,soliman,24,5
+select * from student
+
+update into student id=4,fname=hassan where id = 6
+
+select * from dept
+update into dept id=234,name=hassan where id = 5
+select * from dept

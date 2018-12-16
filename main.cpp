@@ -13,6 +13,7 @@ string separate(string & inputData,string delemeter);
 void insertInto(string & inputData);
 void selectFrom(string & inputData);
 void deleteFrom(string & inputData);
+void updateFrom(string & inputData);
 int main()
 {
     d1.read();
@@ -40,6 +41,10 @@ int main()
         else if(operation == "delete")
         {
             deleteFrom(inputData);
+        }
+        else if(operation == "update")
+        {
+            updateFrom(inputData);
         }
         else if(operation == "save")
         {
@@ -250,6 +255,7 @@ void selectFrom(string & inputData)
     }
 
 }
+
 void deleteFrom(string & inputData)
 {
     string operation = separate(inputData," ");
@@ -304,8 +310,8 @@ void deleteFrom(string & inputData)
                         string value = separate(inputData," ");
                         if(value != "")
                         {
-                           // d1.deleteByID(atoi(value.c_str()), operation);
-                           d1.deleteWhere(s1,columnName,operation,value);
+                            // d1.deleteByID(atoi(value.c_str()), operation);
+                            d1.deleteWhere(s1,columnName,operation,value);
                         }
                         else
                             cout<<"invalid command"<<endl;
@@ -321,6 +327,146 @@ void deleteFrom(string & inputData)
         }
         else
             cout<<"invalid command"<<endl;
+    }
+    else
+        cout<<"invalid command"<<endl;
+}
+
+void updateFrom (string & inputData)
+{
+    string operation = separate(inputData," ");
+    if (operation == "into")
+    {
+        operation = separate(inputData," ");
+        if( operation == "student" )
+        {
+            string columnsNameArr[5];
+            string columnsValueArr[5];
+            operation =separate(inputData," ");
+            columnsNameArr[0] = separate(operation,"=");
+            columnsValueArr[0] = separate(operation,",");
+            if(columnsNameArr[0] == "id" || columnsNameArr[0] =="fname" || columnsNameArr[0] =="lname"
+                    || columnsNameArr[0] =="age" || columnsNameArr[0] =="deptid")
+            {
+                for(int i=1; i<5; i++)
+                {
+                    columnsNameArr[i] = separate(operation,"=");
+                    columnsValueArr[i] = separate(operation,",");
+                    if ( columnsValueArr[i] == "" && columnsNameArr[i] != "" )
+                    {
+                        cout<<"invalid command, check inputs value."<<endl;
+                        return;
+                    }
+                }
+                for(int i=0; i<5; i++)
+                {
+                    if(!(columnsNameArr[i] == "id" || columnsNameArr[i] =="fname" || columnsNameArr[i] =="lname"
+                            || columnsNameArr[i] =="age" || columnsNameArr[i] =="deptid" || columnsNameArr[i] == ""))
+                    {
+                        cout<<"invalid command, check column name."<<endl;
+                        return;
+                    }
+                    if (s1.searchStudentByID(columnsValueArr[i]))
+                    {
+                        cout<<"invalid student id"<<endl;
+                        return;
+                    }
+                }
+                operation =separate(inputData," ");
+                if(operation == "where")
+                {
+                    string columnName =separate(inputData," ");
+                    if(columnName == "id")
+                    {
+                        operation =separate(inputData," ");
+                        if(operation == "=")
+                        {
+                            string value = separate(inputData," ");
+                            if(value != "")
+                            {
+                                //here we will call function that take (columnName ,operation,value) to check and update
+                                s1.updateStudent(columnsNameArr, columnsValueArr, columnName, operation, value);
+                            }
+                            else
+                                cout<<"invalid command"<<endl;
+                        }
+                        else
+                            cout<<"invalid command, accepts '=' only"<<endl;
+                    }
+                    else
+                        cout<<"invalid command, can get 'id' only"<<endl;
+                }
+                else
+                    cout<<"invalid command, add 'where' to compare"<<endl;
+            }
+            else
+                cout<<"invalid command, check column name"<<endl;
+        }
+        else if(operation == "dept")
+        {
+            string columnsNameArr[2];
+            string columnsValueArr[2];
+            operation =separate(inputData," ");
+            columnsNameArr[0] = separate(operation,"=");
+            columnsValueArr[0] = separate(operation,",");
+            if( columnsNameArr[0] == "id" || columnsNameArr[0] =="name" )
+            {
+                for(int i=1; i<2; i++)
+                {
+                    columnsNameArr[i] = separate(operation,"=");
+                    columnsValueArr[i] = separate(operation,",");
+                    if ( columnsValueArr[i] == "" && columnsNameArr[i] != "" )
+                    {
+                        cout<<"invalid command, check inputs value."<<endl;
+                        return;
+                    }
+                }
+
+                for(int i=0; i<2; i++)
+                {
+                    if(!(columnsNameArr[i] == "id" || columnsNameArr[i] =="name" || columnsNameArr[i] == ""))
+                    {
+                        cout<<"invalid command, check column name."<<endl;
+                        return;
+                    }
+                    if ( d1.searchDepartmentByID(atoi(columnsValueArr[i].c_str())) )
+                    {
+                        cout<<"invalid department id"<<endl;
+                        return;
+                    }
+                }
+                operation =separate(inputData," ");
+                if(operation == "where")
+                {
+                    string columnName =separate(inputData," ");
+                    if(columnName == "id")
+                    {
+                        operation =separate(inputData," ");
+                        if(operation == "=")
+                        {
+                            string value = separate(inputData," ");
+                            if(value != "")
+                            {
+                                //here we will call function that take (columnName ,operation,value) to check and update
+                                d1.updateDepartment(s1,columnsNameArr, columnsValueArr, columnName, operation, value);
+                            }
+                            else
+                                cout<<"invalid command"<<endl;
+                        }
+                        else
+                            cout<<"invalid command, accepts '=' only"<<endl;
+                    }
+                    else
+                        cout<<"invalid command, can get 'id' only"<<endl;
+                }
+                else
+                    cout<<"invalid command, add 'where' to compare"<<endl;
+            }
+            else
+                cout<<"invalid command, check column name"<<endl;
+        }
+        else
+            cout<<"invalid command, table name doesn't exist!"<<endl;
     }
     else
         cout<<"invalid command"<<endl;
