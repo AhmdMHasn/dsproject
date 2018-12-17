@@ -3,11 +3,14 @@
 #include <sstream>
 #include <stdlib.h>
 #include "department.cpp"
+#include "UndoStack.cpp"
 
 using namespace std;
 
 department d1;
 student s1;
+Stack stack1;
+
 
 string separate(string & inputData,string delemeter);
 void insertInto(string & inputData);
@@ -48,8 +51,17 @@ int main()
         }
         else if(operation == "save")
         {
+            stack1.deleteAll();
             s1.save();
             d1.save();
+        }
+        else if(operation == "undo")
+        {
+            if(!stack1.isEmpty())
+            {
+                d1.readFromBackup(stack1.peak());
+                s1.readFromBackup(stack1.pop());
+            }
         }
         else
             cout<<"invalid command"<<endl;
@@ -89,7 +101,12 @@ void insertInto(string & inputData)
             {
                 if(d1.searchDepartmentByID(atoi(deptid.c_str())))
                     if(!(s1.searchStudentByID(id)))
+                    {
+                        stack1.push();
+                        s1.saveToBackup(stack1.peak());
+                        d1.saveToBackup(stack1.peak());
                         s1.append(id,fname, lname, atoi(age.c_str()), atoi(deptid.c_str()));
+                    }
                     else
                         cout<<"invalid student id"<<endl;
                 else
@@ -104,7 +121,12 @@ void insertInto(string & inputData)
             string name =separate(inputData,",");
             if(id != "" && name != "")
                 if(!(d1.searchDepartmentByID(atoi(id.c_str()))))
+                {
+                        stack1.push();
+                        s1.saveToBackup(stack1.peak());
+                        d1.saveToBackup(stack1.peak());
                     d1.append(atoi(id.c_str()), name);
+                }
                 else
                     cout<<"invalid dept id"<<endl;
             else
@@ -278,7 +300,9 @@ void deleteFrom(string & inputData)
                         string value = separate(inputData," ");
                         if(value != "")
                         {
-
+                            stack1.push();
+                            s1.saveToBackup(stack1.peak());
+                            d1.saveToBackup(stack1.peak());
                             s1.deleteWhere(columnName,operation,value);
                             //s1.deleteByID(value, operation);
                             //here we will call function that take (columnName ,operation,value)
@@ -311,6 +335,9 @@ void deleteFrom(string & inputData)
                         if(value != "")
                         {
                             // d1.deleteByID(atoi(value.c_str()), operation);
+                            stack1.push();
+                            s1.saveToBackup(stack1.peak());
+                            d1.saveToBackup(stack1.peak());
                             d1.deleteWhere(s1,columnName,operation,value);
                         }
                         else
@@ -323,7 +350,13 @@ void deleteFrom(string & inputData)
                     cout<<"invalid command"<<endl;
             }
             else
+            {
+
+                stack1.push();
+                s1.saveToBackup(stack1.peak());
+                d1.saveToBackup(stack1.peak());
                 d1.deleteALL(s1);
+            }
         }
         else
             cout<<"invalid command"<<endl;
@@ -385,6 +418,9 @@ void updateFrom (string & inputData)
                             if(value != "")
                             {
                                 //here we will call function that take (columnName ,operation,value) to check and update
+                                 stack1.push();
+                                 s1.saveToBackup(stack1.peak());
+                                 d1.saveToBackup(stack1.peak());
                                 s1.updateStudent(columnsNameArr, columnsValueArr, columnName, operation, value);
                             }
                             else
@@ -448,6 +484,9 @@ void updateFrom (string & inputData)
                             if(value != "")
                             {
                                 //here we will call function that take (columnName ,operation,value) to check and update
+                                stack1.push();
+                                s1.saveToBackup(stack1.peak());
+                                d1.saveToBackup(stack1.peak());
                                 d1.updateDepartment(s1,columnsNameArr, columnsValueArr, columnName, operation, value);
                             }
                             else

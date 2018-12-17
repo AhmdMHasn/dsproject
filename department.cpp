@@ -55,6 +55,16 @@ public:
             tail = temp;
         }
     }
+    void deleteALL()
+    {
+         departmentStruct * temp = head;
+        while ( temp != NULL)
+        {
+            head = head -> next;
+            delete temp;
+            temp = head;
+        }
+    }
 
     // Search Department by ID
     departmentStruct * searchDepByID( int _deptID )
@@ -168,6 +178,12 @@ public:
     {
         outFile.open("dept.txt");
         departmentStruct * temp = head;
+        ifstream ifile;
+        ifile.open("deptBackup.txt");
+        if (ifile) {
+        ifile.close();
+        remove("deptBackup.txt");
+         }
         while (temp != NULL)
         {
             outFile << temp -> deptID << " "<< temp -> deptName <<" "<<endl;
@@ -187,7 +203,56 @@ public:
         }
         inFile.close();
     }
+    void readFromBackup(string searchFile)
+    {
+        int flag = 0, fileFlag = 0;
+        ofstream file;
+        string line;
+        inFile.open("deptBackup.txt");
+        outFile.open("tempDept.txt");
+        file.open("dept.txt");
 
+        while(getline(inFile, line))   // I changed this, see below
+        {
+
+                fileFlag=1;
+                if (line.find(searchFile, 0) != string::npos)
+                {
+                    flag = 1;
+                    getline(inFile, line);
+                }
+                if(flag==0)
+                    outFile<<line<<endl;
+                else
+                    file<<line<<endl;
+
+        }
+        outFile.close();
+        file.close();
+        inFile.close();
+        remove("deptBackup.txt");
+        rename("tempDept.txt","deptBackup.txt");
+        if(fileFlag==1)
+        {
+            deleteALL();
+            read();
+        }
+
+    }
+    void saveToBackup (string header)
+    {
+        outFile.open("deptBackup.txt",std::ios_base::app);
+        outFile<<header<<endl;
+        departmentStruct * temp = head;
+        while (temp != NULL)
+        {
+            outFile << temp ->deptID<< " "
+                    << temp ->deptName<<" "<<endl ;
+
+            temp = temp -> next;
+        }
+        outFile.close();
+    }
     void displayWhere(string columnName,string operation,string value)
     {
         departmentStruct * temp = head;
@@ -593,7 +658,7 @@ public:
                                     columnsNameArrNew[0] = "deptId";
                                     columnsValueArrNew[0] = columnsValueArr[i];
                                     s1.updateStudent( columnsNameArrNew, columnsValueArrNew, columnName, operation, value );*/
-                                    s1.updateStudentDeptUpdate( temp -> deptID , atoi(columnsValueArr[i].c_str()) );
+                                    s1.updateStudentDeptUpdate( temp -> deptID, atoi(columnsValueArr[i].c_str()) );
                                     temp -> deptID = atoi(columnsValueArr[i].c_str());
                                 }
                                 else if(input == 'n')

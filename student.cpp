@@ -222,6 +222,12 @@ public:
     {
         outFile.open("student.txt");
         studentStruct * temp = head;
+        ifstream ifile;
+        ifile.open("studentBackup.txt");
+        if (ifile) {
+              ifile.close();
+            remove("studentBackup.txt");
+         }
         while (temp != NULL)
         {
             outFile << temp ->id << " "
@@ -246,6 +252,63 @@ public:
             append(_id,_fnam,_lname,_age,_dept_id);
         }
         inFile.close();
+    }
+
+    void readFromBackup(string searchFile)
+    {
+        int flag = 0, fileFlag = 0;
+        ofstream file;
+        string line;
+        inFile.open("studentBackup.txt");
+        outFile.open("temp.txt");
+        file.open("student.txt");
+
+        while(getline(inFile, line))   // I changed this, see below
+        {
+            if(line != "")
+            {
+                fileFlag=1;
+                if (line.find(searchFile, 0) != string::npos)
+                {
+                    flag = 1;
+                    getline(inFile, line);
+                }
+                if(flag==0)
+                    outFile<<line<<endl;
+                else
+                    file<<line<<endl;
+            }
+        }
+
+
+        outFile.close();
+        file.close();
+        inFile.close();
+        remove("studentBackup.txt");
+        rename("temp.txt","studentBackup.txt");
+        if(fileFlag==1)
+        {
+            deleteALL();
+            read();
+        }
+
+    }
+    void saveToBackup (string header)
+    {
+        outFile.open("studentBackup.txt",std::ios_base::app);
+        outFile<<header<<endl;
+        studentStruct * temp = head;
+        while (temp != NULL)
+        {
+            outFile << temp ->id << " "
+                    << temp ->fName <<" "
+                    << temp ->lName << " "
+                    << temp ->age << " "
+                    << temp ->depID<<endl ;
+
+            temp = temp -> next;
+        }
+        outFile.close();
     }
 
     void displayWhere(string columnName,string operation,string value)
