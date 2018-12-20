@@ -32,6 +32,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="UndoStack.cpp" />
 		<Unit filename="department.cpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="student.cpp" />

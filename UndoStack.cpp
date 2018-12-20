@@ -21,6 +21,23 @@ public:
         counter = 0;
         tail=NULL;
     }
+    ~Stack()
+    {
+        ifstream ifile;
+        ifile.open("studentBackup.txt");
+        if (ifile)
+        {
+            ifile.close();
+            remove("studentBackup.txt");
+        }
+         ifile.open("deptBackup.txt");
+        if (ifile)
+        {
+            ifile.close();
+            remove("deptBackup.txt");
+        }
+    }
+
     int isEmpty()
     {
         return tail == NULL;

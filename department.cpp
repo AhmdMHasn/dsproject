@@ -57,7 +57,7 @@ public:
     }
     void deleteALL()
     {
-         departmentStruct * temp = head;
+        departmentStruct * temp = head;
         while ( temp != NULL)
         {
             head = head -> next;
@@ -180,10 +180,11 @@ public:
         departmentStruct * temp = head;
         ifstream ifile;
         ifile.open("deptBackup.txt");
-        if (ifile) {
-        ifile.close();
-        remove("deptBackup.txt");
-         }
+        if (ifile)
+        {
+            ifile.close();
+            remove("deptBackup.txt");
+        }
         while (temp != NULL)
         {
             outFile << temp -> deptID << " "<< temp -> deptName <<" "<<endl;
@@ -215,16 +216,16 @@ public:
         while(getline(inFile, line))   // I changed this, see below
         {
 
-                fileFlag=1;
-                if (line.find(searchFile, 0) != string::npos)
-                {
-                    flag = 1;
-                    getline(inFile, line);
-                }
-                if(flag==0)
-                    outFile<<line<<endl;
-                else
-                    file<<line<<endl;
+            fileFlag=1;
+            if (line.find(searchFile, 0) != string::npos)
+            {
+                flag = 1;
+                getline(inFile, line);
+            }
+            if(flag==0)
+                outFile<<line<<endl;
+            else
+                file<<line<<endl;
 
         }
         outFile.close();
@@ -327,191 +328,47 @@ public:
                     if(temp -> deptID == atoi(value.c_str()))
                     {
                         deleteWhereDeptID(s1,temp -> deptID);
-                        if ( temp == NULL )
-                            return;
-                        if ( head == tail )
-                        {
-                            delete temp;
-                            head = tail = NULL;
-                        }
-                        else if ( temp == head )
-                        {
-                            head = temp -> next;
-                            head -> prev = NULL;
-                            delete temp;
-                        }
-                        else if ( temp == tail)
-                        {
-                            tail = temp -> prev;
-                            tail -> next = NULL;
-                            delete temp;
-                        }
-                        else
-                        {
-                            temp -> next -> prev = temp -> prev;
-                            temp -> prev -> next = temp -> next;
-                            delete temp;
-                        }
+                        deleteTempNode(temp);
                     }
                 }
                 else if(operation == ">")
                 {
                     if(temp -> deptID > atoi(value.c_str()))
-                        //temp = searchByID(value);
                     {
-                        if ( temp == NULL )
-                            return;
-                        if ( head == tail )
-                        {
-                            delete temp;
-                            head = tail = NULL;
-                        }
-                        else if ( temp == head )
-                        {
-                            head = temp -> next;
-                            head -> prev = NULL;
-                            delete temp;
-                        }
-                        else if ( temp == tail)
-                        {
-                            tail = temp -> prev;
-                            tail -> next = NULL;
-                            delete temp;
-                        }
-                        else
-                        {
-                            temp -> next -> prev = temp -> prev;
-                            temp -> prev -> next = temp -> next;
-                            delete temp;
-                        }
+                        deleteWhereDeptID(s1,temp -> deptID);
+                        deleteTempNode(temp);
                     }
                 }
                 else if(operation == ">=")
                 {
                     if(temp ->deptID >= atoi(value.c_str()))
-                        //temp = searchByID(value);
                     {
-                        if ( temp == NULL )
-                            return;
-                        if ( head == tail )
-                        {
-                            delete temp;
-                            head = tail = NULL;
-                        }
-                        else if ( temp == head )
-                        {
-                            head = temp -> next;
-                            head -> prev = NULL;
-                            delete temp;
-                        }
-                        else if ( temp == tail)
-                        {
-                            tail = temp -> prev;
-                            tail -> next = NULL;
-                            delete temp;
-                        }
-                        else
-                        {
-                            temp -> next -> prev = temp -> prev;
-                            temp -> prev -> next = temp -> next;
-                            delete temp;
-                        }
+                        deleteWhereDeptID(s1,temp -> deptID);
+                        deleteTempNode(temp);
                     }
                 }
                 else if(operation == "<")
                 {
                     if(temp -> deptID < atoi(value.c_str()))
-                        //temp = searchByID(value);
                     {
-                        if ( temp == NULL )
-                            return;
-                        if ( head == tail )
-                        {
-                            delete temp;
-                            head = tail = NULL;
-                        }
-                        else if ( temp == head )
-                        {
-                            head = temp -> next;
-                            head -> prev = NULL;
-                            delete temp;
-                        }
-                        else if ( temp == tail)
-                        {
-                            tail = temp -> prev;
-                            tail -> next = NULL;
-                            delete temp;
-                        }
-                        else
-                        {
-                            temp -> next -> prev = temp -> prev;
-                            temp -> prev -> next = temp -> next;
-                            delete temp;
-                        }
+                        deleteWhereDeptID(s1,temp -> deptID);
+                        deleteTempNode(temp);
                     }
                 }
                 else if(operation == "<=")
                 {
                     if(temp -> deptID <= atoi(value.c_str()))
-                        //temp = searchByID(value);
                     {
-                        if ( temp == NULL )
-                            return;
-                        if ( head == tail )
-                        {
-                            delete temp;
-                            head = tail = NULL;
-                        }
-                        else if ( temp == head )
-                        {
-                            head = temp -> next;
-                            head -> prev = NULL;
-                            delete temp;
-                        }
-                        else if ( temp == tail)
-                        {
-                            tail = temp -> prev;
-                            tail -> next = NULL;
-                            delete temp;
-                        }
-                        else
-                        {
-                            temp -> next -> prev = temp -> prev;
-                            temp -> prev -> next = temp -> next;
-                            delete temp;
-                        }
+                        deleteWhereDeptID(s1,temp -> deptID);
+                        deleteTempNode(temp);
                     }
                 }
                 else if(operation == "!=")
                 {
                     if(temp -> deptID != atoi(value.c_str()))
-                        //temp = searchByID(value);
                     {
-                        if ( temp == NULL )
-                            return;
-                        if ( head == tail )
-                        {
-                            delete temp;
-                            head = tail = NULL;
-                        }
-                        else if ( temp == head )
-                        {
-                            head = temp -> next;
-                            head -> prev = NULL;
-                            delete temp;
-                        }
-                        else if ( temp == tail)
-                        {
-                            tail = temp -> prev;
-                            tail -> next = NULL;
-                            delete temp;
-                        }
-                        else
-                        {
-                            temp -> next -> prev = temp -> prev;
-                            temp -> prev -> next = temp -> next;
-                            delete temp;
-                        }
+                        deleteWhereDeptID(s1,temp -> deptID);
+                        deleteTempNode(temp);
                     }
                 }
                 else
@@ -524,62 +381,16 @@ public:
                 {
                     if(temp -> deptName == value )
                     {
-                        if ( temp == NULL )
-                            return;
-                        if ( head == tail )
-                        {
-                            delete temp;
-                            head = tail = NULL;
-                        }
-                        else if ( temp == head )
-                        {
-                            head = temp -> next;
-                            head -> prev = NULL;
-                            delete temp;
-                        }
-                        else if ( temp == tail)
-                        {
-                            tail = temp -> prev;
-                            tail -> next = NULL;
-                            delete temp;
-                        }
-                        else
-                        {
-                            temp -> next -> prev = temp -> prev;
-                            temp -> prev -> next = temp -> next;
-                            delete temp;
-                        }
+                        deleteWhereDeptID(s1,temp -> deptID);
+                        deleteTempNode(temp);
                     }
                 }
                 else if(operation == "!=")
                 {
                     if(temp -> deptName != value)
                     {
-                        if ( temp == NULL )
-                            return;
-                        if ( head == tail )
-                        {
-                            delete temp;
-                            head = tail = NULL;
-                        }
-                        else if ( temp == head )
-                        {
-                            head = temp -> next;
-                            head -> prev = NULL;
-                            delete temp;
-                        }
-                        else if ( temp == tail)
-                        {
-                            tail = temp -> prev;
-                            tail -> next = NULL;
-                            delete temp;
-                        }
-                        else
-                        {
-                            temp -> next -> prev = temp -> prev;
-                            temp -> prev -> next = temp -> next;
-                            delete temp;
-                        }
+                        deleteWhereDeptID(s1,temp -> deptID);
+                        deleteTempNode(temp);
                     }
                 }
                 else
@@ -599,9 +410,7 @@ public:
             {
                 if(!(s1.searchStudentByDeptID(temp -> deptID)))
                 {
-                    head = head -> next;
-                    delete temp;
-                    temp = head;
+                    deleteTempNode(temp);
                 }
                 else
                 {
@@ -612,9 +421,7 @@ public:
                     if(input == 'y')
                     {
                         s1.deleteByDepartmentID(temp -> deptID);
-                        head = head -> next;
-                        delete temp;
-                        temp = head;
+                        deleteTempNode(temp);
                     }
                     else if(input == 'n')
                     {
@@ -640,24 +447,16 @@ public:
                     {
                         if(columnsNameArr[i] == "id")
                         {
-                            cout << temp -> deptID << "  " << s1.searchStudentByDeptID(temp -> deptID) << endl;
                             if(!(s1.searchStudentByDeptID(temp -> deptID)))
-                            {
                                 temp -> deptID = atoi(columnsValueArr[i].c_str());
-                            }
                             else
                             {
                                 cout << " All students in this department will be updated" << endl <<
-                                     " Are you sure to update this department ?[y/n] :";
+                                     " Are you sure to update this department ?[y/n]: ";
                                 char input;
                                 cin>>input;
                                 if(input == 'y')
                                 {
-                                    /*string columnsNameArrNew[1];
-                                    string columnsValueArrNew[1];
-                                    columnsNameArrNew[0] = "deptId";
-                                    columnsValueArrNew[0] = columnsValueArr[i];
-                                    s1.updateStudent( columnsNameArrNew, columnsValueArrNew, columnName, operation, value );*/
                                     s1.updateStudentDeptUpdate( temp -> deptID, atoi(columnsValueArr[i].c_str()) );
                                     temp -> deptID = atoi(columnsValueArr[i].c_str());
                                 }
@@ -678,6 +477,35 @@ public:
         }
     }
 
+// used for delete specific node
+    void deleteTempNode(departmentStruct * & temp)
+    {
+        if ( temp == NULL )
+            return;
+        else if ( head == tail )
+        {
+            delete temp;
+            head = tail = NULL;
+        }
+        else if ( temp == head )
+        {
+            head = temp -> next;
+            head -> prev = NULL;
+            delete temp;
+        }
+        else if ( temp == tail)
+        {
+            tail = temp -> prev;
+            tail -> next = NULL;
+            delete temp;
+        }
+        else
+        {
+            temp -> next -> prev = temp -> prev;
+            temp -> prev -> next = temp -> next;
+            delete temp;
+        }
+    }
     void printRow(departmentStruct * temp,int counter)
     {
         cout <<"  " << counter << "\t| " << temp -> deptID << "\t| "<< temp -> deptName << endl;

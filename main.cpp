@@ -63,9 +63,11 @@ int main()
                 s1.readFromBackup(stack1.pop());
             }
         }
+        else if ( operation == "" && inputData == ""){}
         else
             cout<<"invalid command"<<endl;
     }
+
     while(1);
 
     return 0;
@@ -122,9 +124,9 @@ void insertInto(string & inputData)
             if(id != "" && name != "")
                 if(!(d1.searchDepartmentByID(atoi(id.c_str()))))
                 {
-                        stack1.push();
-                        s1.saveToBackup(stack1.peak());
-                        d1.saveToBackup(stack1.peak());
+                    stack1.push();
+                    s1.saveToBackup(stack1.peak());
+                    d1.saveToBackup(stack1.peak());
                     d1.append(atoi(id.c_str()), name);
                 }
                 else
@@ -396,7 +398,7 @@ void updateFrom (string & inputData)
                     if(!(columnsNameArr[i] == "id" || columnsNameArr[i] =="fname" || columnsNameArr[i] =="lname"
                             || columnsNameArr[i] =="age" || columnsNameArr[i] =="deptid" || columnsNameArr[i] == ""))
                     {
-                        cout<<"invalid command, check column name."<<endl;
+                        cout<<"invalid command, check column name"<<endl;
                         return;
                     }
                     if (s1.searchStudentByID(columnsValueArr[i]))
@@ -404,8 +406,12 @@ void updateFrom (string & inputData)
                         cout<<"invalid student id"<<endl;
                         return;
                     }
+                    if( columnsNameArr[i] =="deptid" && !d1.searchDepartmentByID(atoi(columnsValueArr[i].c_str())) ){
+                        cout<<"invalid command, department id doesn't exist"<<endl;
+                        return;
+                    }
                 }
-                operation =separate(inputData," ");
+                operation = separate(inputData," ");
                 if(operation == "where")
                 {
                     string columnName =separate(inputData," ");
@@ -418,9 +424,9 @@ void updateFrom (string & inputData)
                             if(value != "")
                             {
                                 //here we will call function that take (columnName ,operation,value) to check and update
-                                 stack1.push();
-                                 s1.saveToBackup(stack1.peak());
-                                 d1.saveToBackup(stack1.peak());
+                                stack1.push();
+                                s1.saveToBackup(stack1.peak());
+                                d1.saveToBackup(stack1.peak());
                                 s1.updateStudent(columnsNameArr, columnsValueArr, columnName, operation, value);
                             }
                             else

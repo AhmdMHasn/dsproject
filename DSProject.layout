@@ -2,40 +2,29 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="student.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="46450" topLine="1205" />
+			<Cursor1 position="1891" topLine="56" />
 		</Cursor>
-		<Folding>
-			<Collapse line="1147" />
-			<Collapse line="1185" />
-		</Folding>
 	</File>
-	<File name="department.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="department.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6753" topLine="390" />
+			<Cursor1 position="13429" topLine="407" />
 		</Cursor>
 		<Folding>
 			<Collapse line="36" />
-			<Collapse line="60" />
-			<Collapse line="75" />
-			<Collapse line="88" />
-			<Collapse line="121" />
-			<Collapse line="155" />
-			<Collapse line="167" />
-			<Collapse line="179" />
+			<Collapse line="58" />
+			<Collapse line="70" />
 		</Folding>
 	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="UndoStack.cpp" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="12948" topLine="171" />
+			<Cursor1 position="634" topLine="0" />
 		</Cursor>
-		<Folding>
-			<Collapse line="21" />
-			<Collapse line="62" />
-			<Collapse line="78" />
-			<Collapse line="125" />
-			<Collapse line="195" />
-		</Folding>
+	</File>
+	<File name="student.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="20775" topLine="35" />
+		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
