@@ -19,6 +19,9 @@ void deleteFrom(string & inputData);
 void updateFrom(string & inputData);
 int main()
 {
+    cout << "Welcome to our Database Program" << endl;
+    cout << "Developed by iTi - Web & Mobile Applications Development - Ismailia Branch" << endl;
+    cout << "Use 'help' to get more information of how to use our program. " << endl << endl;
     d1.read();
     s1.read();
     do
@@ -28,10 +31,12 @@ int main()
         string operation = separate(inputData," ");
         if(operation == "help")
         {
-            cout<<"to insert data in table : insert into tableName id,fname,lname,age,deptId"<<endl;
-            cout<<"to delete all data in table : delete from tableName"<<endl;
-            cout<<"to delete all data in table : delete from tableName where columnName = value"<<endl;
-            cout<<"to select all data in table : select * from tableName"<<endl;
+            cout<<"to insert data in table: insert into tableName id,fname,lname,age,deptId"<<endl;
+            cout<<"to delete all data in table: delete from tableName"<<endl;
+            cout<<"to delete all data in table: delete from tableName where columnName = value"<<endl;
+            cout<<"to select all data in table: select * from tableName"<<endl;
+            cout<<"to undo: undo"<<endl;
+            cout<<"to save: save"<<endl;
         }
         else if(operation == "insert")
         {
